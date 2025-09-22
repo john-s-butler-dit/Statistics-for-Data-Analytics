@@ -1,3 +1,3 @@
-## Probability and Statistics  Website
+## Statistics for Data Analytics Website
 
-This is a temporary website for Probability and Statistical Inference in TU Dublin
+This is a temporary website for Statistics for Data Analytics in TU Dublin
