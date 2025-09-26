@@ -5,6 +5,18 @@ title: Statistics for Data Analytics
 
 ## Lectures 
 
+## Introduction
+### [Overview of Module](Week1Materials/1007_HouseKeepingWeek1.pdf)
+### [Concept Map](Week1Materials/Statistics_for_Data_Analytics_Map.pdf)
+### [Summary Sheet](Week1Materials/Statistics_for_Data_Analytics_Summary.pdf)
+
+## Week 1 Lectures
+
+### [Data Type](Week1Materials/1007_Lecture01b-Data_Type.pdf)
+### [Measures of Location](Week1Materials/1007_Lecture02-Measures_of_Location.pdf)
+### [Counting Rules](Week1Materials/1007_Lecture03a-Counting_Rules.pdf)
+
+
 
 ## Week 2 Lectures
 
