@@ -1,0 +1,31 @@
+---
+title: "My First R"
+output: word_document
+date: "2025-10-01"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+
+
+```{r Q1, echo=FALSE}
+
+X<-c(0,1,2,3,4)
+P<-c(0.1,0.2,0.4,0.2,0.1)
+
+E<-sum(X*P)
+print(E)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

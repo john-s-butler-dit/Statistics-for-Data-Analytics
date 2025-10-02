@@ -1,0 +1,494 @@
+---
+output:
+  pdf_document: default
+  includes:
+    in_header: preamble.tex
+  latex_engine: xelatex
+  citation_package: natbib
+  keep_tex: yes
+header-includes:
+ \usepackage{booktabs}
+ \usepackage{longtable}
+ \usepackage{array}
+ \usepackage{multirow}
+ \usepackage{wrapfig}
+ \usepackage{float}
+
+---
+```{r include=FALSE,echo=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+#versionlibrary(knitr)
+library(ggplot2)
+library(ggpubr)
+library(rstatix)
+library(tidyverse)
+library(dplyr)
+library(reshape2)
+library(kableExtra)
+library(rstatix)
+
+```
+# Tutorial Sheet 3 Solutions {-}
+## Probability Mass Distributions  {-}
+
+### Question 1  {-}
+1.	The probability mass function of a discrete random variable X is given in the following table:
+
+```{r , include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning = FALSE,  fig.pos = "H",dpi = 300)
+```
+
+
+```{r include=FALSE,echo=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+library(ggpubr)
+library(knitr)
+library(ggplot2)
+library(ggpubr)
+library(knitr)
+library(rstatix)
+library(tidyverse)
+library(dplyr)
+library(reshape2)
+library(kableExtra)
+library(rstatix)
+
+```
+
+
+
+```{r,dpi=300,echo=FALSE, warning=FALSE}
+i=1:5
+x<- 0:4
+Pr<-c(0.1,0.2,0.4,0.2,0.1)
+
+df <- data.frame(as.character(i),x,Pr)
+names(df)<- c("i","x","p(x)")
+kable(t(df),format = "latex", caption = "Q1: Probability Mass Function.",table.envir = "table",position = "h")
+
+```
+
+```{r,dpi=300,echo=FALSE, warning=FALSE,fig.cap = "caption"}
+Q1.p_dist<-ggplot(df, aes(x=x,y=Pr)) + geom_col(width = 0.1)+xlab("x")+ylab("Pr(x)")+ylim(0,1)
+#Q1.p_dist
+```
+
+i. Find the E[X] and Var [X].
+
+#### __ANSWER__  {-}
+The formula for the Expected value, E[X] is:
+
+$$ E[X]=x_1p_1+x_2p_2+x_3p_3+x_4p_4+x_5p_5=\sum_{i=1}^5x_ip_i $$
+
+Doing the E[X] calculation in tabular form:
+
+```{r,dpi=300,echo=FALSE, warning=FALSE,fig.cap = "caption"}
+
+xPr<-x*Pr
+df <- data.frame(as.character(i),x,Pr,xPr)
+Expected<-sum(df$xPr)
+names(df)<- c("i","x","p(x)","xp(x)")
+kable(t(df),format = "latex", caption = 'Q1: Expected Value Calculation',table.envir = "table",position = "H")
+
+```
+
+$$ E[X]=0 (0.1)+1(0.2)+2(0.4)+3 (0.2)+4(0.1)= `r  Expected` $$
+The expected value E[X] is `r Expected`.
+
+
+The formula for the Variance value, VAR[X], is:
+
+$$ VAR[X]=(x_1-E[X])^2p_1+(x_2-E[X])^2p_2+$$
+$$(x_3-E[X])^2p_3+(x_4-E[X])^2p_4+(x_5-E[X])^2p_5=\sum_{i=1}^5(x_i-E[X])^2p_i $$
+
+In tabular form:
+
+```{r,dpi=300,echo=FALSE, warning=FALSE}
+var_x<-(x-Expected)^2*Pr
+df <- data.frame(as.character(i),x,Pr,xPr,var_x)
+names(df)<- c("i",
+                           "x",
+                           "p(x)",
+                      "xp(x)","(x-E[x])^2p(x)")
+VAR<-sum(var_x)
+kable(t(df),caption = 'Q1: Variance Calculation',format = "latex",table.envir = "table",position = "H")
+
+```
+
+$$ VAR[X]=(0-`r Expected`)^2 0.1+(1-`r Expected`)^2 0.2+$$
+$$(2-`r Expected`)^2 0.4+(3-`r Expected`)^2 0.2+(4-`r Expected`)^2 0.1=`r VAR`. $$
+
+The Variance value VAR[X] is `r VAR`.
+
+
+
+
+```{r,dpi=300,echo=FALSE, warning=FALSE}
+
+Q1.p_dist+geom_vline(xintercept = Expected, color = "blue", size=1)+geom_text(aes(x=Expected, label="E[k]", y=max(1)),vjust=2,     colour="blue",  text=element_text(size=18))+geom_text(aes(x=Expected-VAR, label="E[X]-VAR[k]", y=max(1)),vjust=2,     colour="red",  text=element_text(size=18))+geom_text(aes(x=Expected+VAR, label="E[X]+VAR[k]", y=max(1)),vjust=2,     colour="red",  text=element_text(size=18))+geom_vline(xintercept = Expected-VAR, color = "red", size=1)+geom_vline(xintercept = Expected+VAR, color = "red", size=1)+
+  ggtitle("Q1 Probability Mass  Distribution")
+
+```
+
+ii. The Cumulative probability mass function
+
+The cumulative probability mass function of a discrete random variable X is given in the following table:
+
+
+
+```{r,dpi=300,echo=FALSE, warning=FALSE}
+x<- -1:4
+CumPr<-c(0,cumsum(Pr))
+text_x<- c("<0","$0 \\leq x<1$","$1 \\leq x<2$","$2\\leq x<3$","$3\\leq x<4$","x>4")
+df <- data.frame(text_x,CumPr)
+names(df)<- c("r",
+                           "F(r)")
+kable(t(df),caption = "Q1: Cumulative Probability Mass Function.",format = "latex", escape = FALSE,table.envir = "table",position = "H")
+
+
+```
+
+
+```{r,dpi=300,echo=FALSE, warning=FALSE}
+Q1.p_dist<-ggplot(df, aes(x=x,y=CumPr)) + geom_step()+xlab("r")+geom_point( color="red")+ylab("Cumulative F(r)")+ylim(0,1)
+
+Q1.p_dist+
+  ggtitle("Q1 Cumulative Probability Mass  Distribution")
+
+```
+
+
+
+
+
+### Question 2  {-}
+
+The probability mass function of a discrete random variable X is given in the following table:
+
+```{r,dpi=300,echo=FALSE, warning=FALSE}
+
+x<- c(-2,	-1,	0,	1,	2)
+i<-0:4
+Pr<-c(0.1,0.3,0.3,0.2,0.1)
+
+df <- data.frame(as.character(i),x,Pr)
+names(df)<- c("i","x","p(x)")
+#
+kable(t(df),caption = "Q2: Probability Mass Function.",format = "latex",table.envir = "table",position = "H")
+
+
+
+```
+
+
+i. Show that p3 = 0.2 
+
+
+#### __ANSWER__  {-}
+
+
+$$ 0.1+0.3+0.3+p_3+0.1=1$$
+re-arranging
+$$ p_3=1-0.1+0.3+0.3+0.1$$
+$$ p_3=1-0.8=0.2$$
+
+
+```{r,dpi=300,echo=FALSE, warning=FALSE}
+
+Q2.p_dist<-ggplot(df, aes(x=x,y=Pr)) + geom_col(width = 0.1)+xlab("x")+ylab("Pr(x)")+ylim(0,1)
+Q2.p_dist
+```
+
+
+ii. Calculate the E[X] and Var[X].
+
+#### __ANSWER__  {-}
+
+$$ E[X]=x_1p_1+x_2p_2+x_3p_3+x_4p_4+x_5p_5=\sum_{i=1}^5x_ip_i $$
+
+
+```{r,dpi=300,echo=FALSE, warning=FALSE}
+i=1:5
+xPr<-x*Pr
+df <- data.frame(as.character(i),x,Pr,xPr)
+names(df)<- c("i","x","p(x)","xp(x)")
+Expected<-sum(xPr)
+kable(t(df),caption = 'Q2: Expected Value Calculation',format = "latex",table.envir = "table",position = "H")
+```
+
+$$ E[X]=-2 (0.1)+-1(0.3)+0(0.3)+1 (0.2)+2(0.1)= `r  Expected` $$
+The expected value E[X] is `r Expected`.
+
+Calculating the Var[X] in tabular form:
+
+```{r,dpi=300,echo=FALSE, warning=FALSE}
+var_x<-(x-Expected)^2*Pr
+df <- data.frame(as.character(i),x,Pr,xPr,var_x)
+names(df)<- c("i",
+                           "x",
+                           "p(x)",
+                      "xp(x)","(x-E[x])^2p(x)")
+VAR<-sum(var_x)
+kable(t(df),caption = 'Q2: Variance Calculation',format = "latex",table.envir = "table",position = "H")
+
+#t(df)
+```
+
+The formula for the Variance value, VAR[X], is:
+
+$$ VAR[X]=\sum_{i=1}^5(x_i-E[X])^2p_i $$
+
+
+$$ VAR[X]=`r VAR`. $$
+
+
+
+
+
+```{r,dpi=300,echo=FALSE, warning=FALSE}
+Q2.p_dist+geom_vline(xintercept = Expected, color = "blue", size=1)+geom_vline(xintercept = Expected-VAR, color = "red", size=1)+geom_vline(xintercept = Expected+VAR, color = "red", size=1)+geom_text(aes(x=Expected, label="E[k]", y=max(1)),vjust=2,     colour="blue",  text=element_text(size=18))+
+  ggtitle("Q2 Probability Mass Distribution with E[X] and Var[X]")
+```
+
+### Question 3  {-}
+
+3. 20% of the Irish population watched Ireland beat France in the Rugby World Cup. A representative from TV3 marketing was sent to Grafton Street to ask passersby their opinion of the match coverage. Let X denote the number of people need to be asked til the marketer successfully finds someone who watched the game.
+
+
+i	Give the Geometric probability mass function for X.
+```{r,dpi=300,echo=FALSE, warning=FALSE}
+p<-0.2
+q<-1-p
+
+```
+
+
+__ANSWER__
+
+
+The probability of "success" is $$p=`r p`,$$ the probability of "failure" is $$q=1-p=`r q`.$$
+This gives the general definition of the distribution as:
+\[\Pr(k)=`r q`^{(k-1)}`r p`, \ \ k=1,2,... \]
+where k is the number of people asked by the marketer.
+
+
+
+
+
+ii	Find the probability that the marketer had to ask exactly 2 people. 
+
+__ANSWER__
+
+\[\Pr(2)=`r q`^{(2-1)}`r p`= `r q`(`r p`)=`r q*p`\]
+
+
+iii What is the E [X ] and V ar [X ] of the distribution.
+
+__ANSWER__
+
+The expected outcome of,
+\[E[k]=\frac{1}{p}=\frac{1}{`r p`}=`r 1/p`,\] 
+and variance of 
+\[Var[k]=\frac{q}{p^2}=\frac{`r q`}{`r p`^2}=`r q/(p*p)`.\]
+
+
+```{r,dpi=300,echo=FALSE, warning=FALSE}
+People<-0:20 # Number of Games
+E_X<-1/p # Expected Value
+Var_X<-(q)/(p*p) # Variance
+Pr_win<-c(dgeom(People,p))
+People<-0:20+1
+
+df <- data.frame(People,Pr_win)
+#names(df)<- c("k (People)","p(x)")
+#kable((df),caption="Q3")
+
+# Plot
+Geometric.p_dist<-ggplot(df, aes(x=People,y=Pr_win)) + geom_col(width = 0.1)+
+  xlab("Number of People asked \n until one watched Game")+ylab("Pr(People until one watched)")+
+  ggtitle("Q3 Geometric  Distribution")+
+  scale_x_continuous(breaks=People)+ 
+  geom_vline(xintercept = E_X,  color = "blue", size=1)+
+  geom_text(aes(x=E_X, label="E[k]", y=max(Pr_win)),vjust=2, 
+            colour="blue", text=element_text(size=18))
+
+
+
+People<-0:21
+CumPr_win<-c(0,cumsum(Pr_win))
+df <- data.frame(People,CumPr_win)
+
+Geometric.p_cumdist<-ggplot(df, aes(x=People,y=CumPr_win)) + geom_step()+
+  xlab("r")+ylab("F(r)")+
+  ggtitle("Cummulative  Distribution")
+
+
+
+
+ggarrange(  Geometric.p_dist, Geometric.p_cumdist, 
+          labels = c("A", "B"),
+          ncol = 2, nrow = 1)
+```
+
+
+
+### Very Optional Question 4 {-}
+
+4.	The probability mass function of a Bernoulli random variable X is given in the following table:
+
+
+```{r,dpi=300,echo=FALSE, warning=FALSE}
+
+x<- c(0,1)
+
+Pr<-c("q","p")
+
+df <- data.frame(x,Pr)
+names(df)<- c("x","p(x)")
+#
+kable(t(df),caption = "Q4: Probability Mass Function.",format = "latex",table.envir = "table",position = "H")
+
+
+
+```
+
+a.	Find the mean E[X] and variance Var[X].
+__Answer:__
+
+\[q=1-p, p=1-q, 1=p+q.\]
+
+\[E[X]=\Sigma_{x} x p(x)=0(q)+1(p)=p. \]
+
+
+\[Var[X]=\Sigma_{x}(x-E[X])^2 p(x)=(0-p)^2(q)+(1-q)^2(p)=p^2q+q^2p \]
+\[Var[X]==p^2q+q^2p=qp(p+q)=qp \]
+
+
+### MCQ Question 5 {-}
+
+Which of the following is true about a probability mass function (PMF) of a discrete random variable?
+
+A) The PMF can take any value greater than or equal to 0.
+
+B) The sum of all values of a PMF is 1.
+
+C) The PMF can take negative values.
+
+D) The PMF is defined for continuous random variables.
+
+__Solution__
+
+Correct Answer: B) The sum of all values of a PMF is 1.
+
+### MCQ Question 6 {-}
+
+The probability mass function of a discrete random variable $X$ is given in the following table:
+
+
+```{r,dpi=300,echo=FALSE, warning=FALSE}
+i=1:4
+x<- c(-4,-2,2,6)
+Pr<-c(0.1,0.3,0.4,0.2)
+
+df <- data.frame(as.character(i),x,Pr)
+names(df)<- c("i","x","p(x)")
+kable(t(df),format = "latex", caption = "Q6: Probability Mass Function.",table.envir = "table",position = "h")
+
+```
+
+What is the probability that X takes a value greater than -2?
+
+A) 0.1
+
+B) 0.2
+
+C) 0.6
+
+D) 0.4
+
+E) 0.7
+
+__Solution__
+
+ Answer: C) 0.6
+
+### MCQ Question 7 {-}
+
+Which of the following best describes the geometric distribution?
+
+A) It models the number of successes before the first failure in a series of independent Bernoulli trials.
+
+B) It models the number of trials until the first success in a series of independent Bernoulli trials.
+
+C) It models the number of failures before the first success in a series of dependent Bernoulli trials.
+
+D) It models the number of trials until the first success in a series of dependent Bernoulli trials.
+
+__Solution__
+ANSWER: B
+
+### MCQ Question 8 {-}
+
+Spot three reasons why  the following table cannot be a probability mass function of a discrete random variable $X$:
+
+
+```{r,dpi=300,echo=FALSE, warning=FALSE}
+i<-c(1,2,3,4)
+x<- c(4,-2,2,6)
+Pr<-c(0.1,-0.3,0.4,0.2)
+
+df <- data.frame(as.character(i),x,Pr)
+names(df)<- c("i","x","p(x)")
+kable(t(df),format = "latex", caption = "Q8: Probability Mass Function.",table.envir = "table",position = "h")
+
+```
+
+
+__Solution__
+
+1. Negative probability
+
+2. Probabilities do not sum to 1
+
+3. In wrong order (this is a bit of a weak one)
+
+
+### MCQ Question 9 {-}
+
+What is the variance of a Bernoulli random variable with success probability \( p = 0.6 \)?
+
+A)  0.24  
+
+B)  0.36  
+
+C)  0.4  
+
+D)  0.6  
+
+**Answer**: **A**  
+\( \text{Var}[X] = p(1 - p) = 0.6 \cdot 0.4 = 0.24 \)
+
+
+
+### MCQ Question 10 {-}
+Which statement best describes a cumulative distribution function (CDF)?
+
+A)  It gives the probability of a specific value.  
+
+B)  It gives the probability that a variable is greater than a value.  
+
+C)  It gives the probability that a variable is less than or equal to a value.  
+
+D)  It gives the expected value of a distribution.  
+
+**Answer**: **C**
+
+### Question 11 {-}
+
+Write your own question for a geometric distribution.

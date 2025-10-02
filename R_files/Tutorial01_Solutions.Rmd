@@ -1,0 +1,503 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+# Problem Sheet 1 - Solutions {-}
+
+### Question 0 * {-}
+
+Give an example of each of the following data types:
+
+i. Categorical
+
+__SOLUTION:__
+
+Dog or Cat
+
+ii. Interval
+
+__SOLUTION:__
+
+Height
+
+iii. Ordinal
+
+__SOLUTION:__
+
+What did you think of the first class:
+
+Hated it,  Neutral, Loved it
+
+
+
+## Measures of Location {-}
+### Question 1 {-}
+
+Describe each of the following measures of location including their the pros and cons
+
+i. Mean
+
+The mean is the point at which the sum of the deviations is 0:
+
+Pros:
+
+
+* Easy to calculate;
+
+* Uses all the data.
+
+Con:
+
+* Sensitive to extreme values.
+ 
+
+
+ii. Median
+
+The median is the middle value of the ordered set of values:
+
+Pros:
+
+* Median gives the center of the data;
+
+* Not sensitive to extreme values.
+
+Con:
+
+* Does not use all the data.
+	 
+
+
+iii. Variance
+
+The variance is the spread around the mean:
+
+Pro:
+
+* Takes all data into account.
+
+Cons:
+
+
+* Hard to interpret;
+
+* Can be influenced by extreme values.
+	
+
+
+iv. Skewness
+
+
+Skewness is a measure of symmetry of a distribution:
+Pro
+
+* Takes all data into account;
+
+Con
+
+* Not intuitive.
+
+
+## Counting Questions  {-}
+### Question 2 {-}
+
+In a given card game hand each player gets four cards
+
+i.	How many different combinations of four cards can be made for a 52 card deck, when __order does__ matter.
+
+
+
+__SOLUTION:__
+
+
+$$P_4^{52}=\frac{52!}{(52-4)!}=(52\times51\times50\times49)=6,497,400 $$
+
+```{r P1aQ2a,echo=FALSE}
+Q2a<-52*51*50*49
+
+# OR
+Q2a<-factorial(52)/factorial(48)
+
+```
+
+
+ii.	How many different combinations of four cards can be made for a 52 card deck, when order __does not__ matter.
+
+
+__SOLUTION:__
+```{r P1aQ2b,echo=FALSE}
+Q2b<-52*51*50*49/(4*3*2*1)
+
+# OR
+Q2b<-choose(52,4)
+
+```
+
+Order __does not__ matter
+$$C_4^{52}=\big(\begin{array}{c} 52\\ 4 \end{array} \big)=\frac{52!}{(52-4)!4!}=\frac{(52\times51\times50\times49)}{(4\times3\times2\times1)}=`r Q2b` $$
+
+
+
+iii.	What is the probability of being dealt a hand with the 2 of clubs, the 3 of clubs, the 4 of clubs and the 5 of clubs, __in exact order__?
+
+__SOLUTION:__
+
+$$\frac{1}{P_4^{52}}=\frac{1}{\frac{52!}{(52-4)!}}=\frac{1}{(52\times51\times50\times49)}=`r 1/Q2a` $$
+
+
+
+iv.	What is the probability of being dealt a hand with the 2 of clubs, the 3 of clubs, the 4 of clubs and the 5 of clubs, __in any order__?
+
+__SOLUTION:__
+
+$$\frac{1}{C_4^{52}}=\frac{1}{\frac{52!}{(52-4)!4!}}=\frac{4\times3\times2\times1}{(52\times51\times50\times49)}=`r 1/Q2b` $$
+
+v.	What is the probability of being dealt a hand with the 2 of diamonds, the 7 of spades, the 9 of clubs and the Queen of diamonds, in any order?
+
+__SOLUTION:__
+
+$$\frac{1}{C_4^{52}}=\frac{1}{\frac{52!}{(52-4)!4!}}=\frac{4\times3\times2\times1}{(52\times51\times50\times49)}=`r 1/Q2b` $$
+
+
+vi.	What is the probability of being dealt a hand with at least one King, in any order?
+
+__SOLUTION:__
+
+```{r P1aQ2f,echo=FALSE}
+Q2fi<-4*48*47*46/(1*3*2*1)
+Q2fii<-4*3*48*47/(2*1*2*1)
+Q2fiii<-4*3*2*48/(3*2*1*1)
+Q2fiv<-1
+Q2fo<-48*47*46*45/(4*3*2*1)
+Q2fi+Q2fii+Q2fiii+Q2fiv+Q2fo
+```
+
+Number of hands with at least one king in any order:
+Hands with exactly One King
+
+$$\frac{(4\times48\times47\times46)}{(1\times3\times2\times1)}=`r Q2fi` $$
+Hands with exactly Two Kings
+
+$$\frac{(4\times3\times48\times47)}{(2\times1\times2\times1)}=`r Q2fii` $$
+Hands with exactly Three Kings
+
+$$\frac{(4\times 3 \times 2\times48)}{(3\times 2\times1\times1)}=`r Q2fiii` $$
+
+Hands with exactly Four Kings
+
+$$\frac{(4\times 3 \times 2\times1)}{(4\times 3\times 2\times1\times1)}=`r Q2fiv` $$
+Hands with exactly Zero Kings
+
+$$\frac{(48\times 47 \times 46\times45)}{(4\times3\times 2\times1)}=`r Q2fo` $$
+All possible hands
+`r Q2fo+Q2fi+Q2fii+Q2fiii+Q2fiv`
+`r Q2b`
+
+At least one King is all possible hands minus no kings
+`r Q2fi+Q2fii+Q2fiii+Q2fiv`
+$$\frac{\frac{(4\times51\times50\times49)}{(1\times3\times2\times1)}}{\frac{52!}{(52-4)!4!}}=\frac{4\times51\times50\times49}{(52\times51\times50\times49)}=`r (Q2fi+Q2fii+Q2fiii+Q2fiv)/Q2b` $$
+
+
+### Question 3  {-}
+
+A bank issues bank cards with PINs consisting of 4 digits, each one {0,1,2,…,9}. 
+
+A. Given that any 4-digit code can be used.
+i.	How many unique PINs can be generated?
+
+
+__SOLUTION:__
+
+```{r P1aQ3i,echo=FALSE}
+Q3ia<-10*10*10*10
+```
+
+
+$$10^4=10\times 10 \times 10\times 10\times 10=`r Q3ia`$$
+
+ii.	What is the probability of guessing someone’s PIN?
+
+__SOLUTION:__
+
+$$\frac{1}{10^4}=\frac{1}{10\times 10 \times 10\times 10\times 10}=`r 1/Q3ia`$$
+
+iii.	What is the probability of guessing someone’s PIN given you know the first number?
+
+__SOLUTION:__
+
+$$\frac{10}{10^4}=\frac{10}{10\times 10 \times 10\times 10\times 10}=`r 10/Q3ia`$$
+
+B. The digits must be different.
+
+i.	How many unique PINs can be generated?
+
+__SOLUTION:__
+
+
+Order __does__ matter
+$$P_4^{10}=\frac{10!}{(10-4)!}=(10\times9\times8\times7)=5,040 $$
+```{r P1aQ3ii,echo=FALSE}
+Q3iia<-10*9*8*7
+```
+
+ii.	What is the probability of guessing someone’s PIN?
+
+__SOLUTION:__
+
+$$\frac{1}{P_4^{10}}=\frac{1}{\frac{10!}{(10-4)!}}=\frac{1}{(10\times9\times8\times7)}=`r 1/Q3iia` $$
+
+iii.	What is the probability of guessing someone’s PIN give you know the first number?
+
+__SOLUTION:__
+
+$$\frac{10}{P_4^{10}}=\frac{10}{\frac{10!}{(10-4)!}}=\frac{10}{(10\times9\times8\times7)}=`r 10/Q3iia` $$
+
+
+### Question 4   {-}
+
+ In a lottery, each ticket has 5 one-digit numbers 0-9 which is not repeated on it.
+ 
+A. You win if your ticket has the digits in any order. 
+
+i.	What are the total number of possible combinations?
+
+
+
+__SOLUTION:__
+
+
+Order __does not__ matter
+$$C_5^{10}=\big(\begin{array}{c} 10\\ 5 \end{array} \big)=\frac{10!}{(10-5)!5!}=\frac{(10\times9\times8\times7\times6)}{(5\times4\times3\times2\times1)}=252 $$
+```{r P1aQ4i,echo=FALSE}
+Q4i<-choose(10,5)
+Q4i<-10*9*8*7*6/(5*4*3*2*1)
+
+```
+
+
+ii.	What is the probability of winning?
+
+__SOLUTION:__
+
+
+Order __does not__ matter
+$$\frac{1}{\big(\begin{array}{c} 10\\ 5 \end{array} \big)}=\frac{1}{\frac{10!}{(10-5)!5!}}=\frac{(5\times4\times3\times2\times1)}{(10\times9\times8\times7\times6)}=`r 1/Q4i` $$
+
+B. You would win only if your ticket has the digits in the required order.
+
+i.	What are the total number of possible combinations?
+
+
+__SOLUTION:__
+
+
+Order __does__ matter
+$$P_5^{10}=\frac{10!}{5!}=10\times9\times8\times7\times6=30240 $$
+```{r P1aQ4ii,echo=FALSE}
+Q4ii<-10*9*8*7*6
+
+```
+
+ii.	What is the probability of winning?
+
+$$\frac{1}{P_5^{10}}=\frac{1}{\frac{10!}{5!}}=\frac{1}{10\times9\times8\times7\times6}=`r 1/Q4ii` $$
+
+
+### Question 5  {-}
+
+How many different combinations of 6 cards can be made for a 52 card deck if
+
+i. order matters.
+
+
+__SOLUTION:__
+
+
+Order __does__ matter
+$$P_6^{52}=\frac{52!}{(52-6)!}=52\times51\times50\times49\times48\times47=14,658,134,400 $$
+```{r P1aQ5i,echo=FALSE}
+A<-52*51*50*49*48*47
+A<-factorial(52)/factorial(46)
+```
+
+ii. order does not matter
+
+__SOLUTION:__
+
+
+Order __does not__ matter
+$$C_6^{52}=\big(\begin{array}{c} 52\\ 6 \end{array} \big)=\frac{52!}{(52-6)!6!}=\frac{(52\times51\times50\times49\times48\times47)}{(6\times5\times4\times3\times2\times1)}=20,358,520 $$
+```{r P1aQ5ii,echo=FALSE}
+A<-choose(52,6)
+A<-52*51*50*49*48*47/(6*5*4*3*2*1)
+
+```
+
+### Question 6  {-}
+
+In a game of 5 card poker what are the number of different possible hands are there?
+
+i.	What is the probability of being dealt a hand with a pair?
+
+
+__SOLUTION:__
+
+Number of hands with a pair (or more):
+$$\frac{52\times3}{2\times1}\times\frac{(48\times47\times46)}{(3\times2\times1)}=1,349,088$$
+```{r P1aQ7i,echo=FALSE}
+Q7i<-(52*3)/(2*1)*48*47*46/(3*2*1)
+Q7_all<-choose(52,5)
+
+```
+
+Number of hands all possible hands
+$$\frac{(52\times 51\times 50 \times49\times 48)}{(5\times4\times3\times2\times1)}=`r Q7_all`$$
+Number of all possible hands:
+
+$$p(pair)=\frac{\frac{52\times3}{2\times1}\times\frac{(48\times47\times46)}{(3\times2\times1)}}{\frac{(52\times 51\times 50 \times49\times 48)}{(5\times4\times3\times2\times1)}}=`r Q7i/Q7_all`$$
+
+(Alternative) A hand with a only pair
+
+__SOLUTION:__
+
+```{r P1aQ7a,echo=FALSE}
+Q7aa<-(52*3)/(2*1)*48*44*40/(3*2*1)
+
+```
+
+$$\frac{52\times3}{2\times1}\times\frac{(48\times44\times40)}{(3\times2\times1)}=`r Q7aa`$$
+
+
+$$p(pair)=\frac{\frac{52\times3}{2\times1}\times\frac{(48\times44\times40)}{(3\times2\times1)}}{\frac{(52\times 51\times 50 \times49\times 48)}{(5\times4\times3\times2\times1)}}=`r Q7aa/Q7_all`$$
+
+
+ii.	What is the probability of being dealt a hand with two pair?
+
+
+__SOLUTION:__
+
+```{r P1aQ7b,echo=FALSE}
+Q7b<-((52*3)/(2*1)*48*3/(2*1))/2*44/1
+```
+
+Number of two pair hands:
+
+$$\frac{\frac{52\times3}{2\times1}\times\frac{48\times3}{2\times1}}{2\times1}\times\frac{44}{1}=`r Q7b`$$
+
+
+
+$$p(\text{two pair})=\frac{\frac{\frac{52\times3}{2\times1}\times\frac{48\times3}{2\times1}}{2\times1}\times\frac{44}{1}}{\frac{(52\times 51\times 50 \times49\times 48)}{(5\times4\times3\times2\times1)}}=`r Q7b/Q7_all`$$
+
+
+iii.	What is the probability of being dealt a hand with three of a kind and two of kind (Full House)
+
+__SOLUTION:__
+
+Numer of Full House hands:
+
+$$\frac{52\times3\times2}{3\times2\times1}\times\frac{48\times3}{2\times1}=3,744$$
+```{r P1aQ7c,echo=FALSE}
+Q7c<-((52*3*2)/(3*2*1)*48*3/(2*1))
+```
+
+$$p(\text{Full House})=\frac{\frac{52\times3\times2}{3\times2\times1}\times\frac{48\times3}{2\times1}}{\frac{(52\times 51\times 50 \times49\times 48)}{(5\times4\times3\times2\times1)}}=`r Q7c/Q7_all`$$
+
+
+iv.	What is the probability of being dealt a hand with a Flush (all the same suit)
+
+__SOLUTION:__
+
+```{r P1aQ7d,echo=FALSE}
+Q7d<-((52*12*11*10*9)/(5*4*3*2*1))
+```
+
+Number of possible flush hands 
+$$\frac{52\times12\times11\times10\times9}{5\times4\times3\times2\times1}=`r Q7d`$$
+
+$$p(Flush)=\frac{\frac{52\times12\times11\times10\times9}{5\times4\times3\times2\times1}}{\frac{(52\times 51\times 50 \times49\times 48)}{(5\times4\times3\times2\times1)}}=`r Q7d/Q7_all`$$
+
+
+## Multiple-Choice Questions {-}
+
+### MCQ Question 7 {-}
+Which of the following is an example of an ordinal data type?
+
+A. Temperature in Celsius
+
+B. Eye color
+
+C. Customer satisfaction rating (e.g., Poor, Fair, Good, Excellent)
+
+D. Bank account number
+
+Answer: C. Customer satisfaction rating
+
+### MCQ Question 8 {-}
+Which measure of location is least affected by extreme values?
+
+A. Mean
+
+B. Median
+
+C. Mode
+
+D. Variance
+
+Answer: B. Median
+
+### MCQ Question 9 {-}
+How many different ways can the letters of the word "STATISTICS" be arranged?
+
+A) 3,628,800
+
+B) 50,400
+
+C) 63,504
+
+D) 1,260
+
+__ANSWER: B) 50,400__
+
+Explanation: 
+This is a permutation problem with repeated elements. The total number of arrangements is given by 10!/(3!3!2!)
+
+### MCQ Question 10 {-}
+
+You have 10 different players and need to form a lineup of 4 players, where the order in which they are arranged does not matter. What rule should you use to calculate how many different lineups can be made?
+
+A) Combination
+
+B) Permutation
+
+C) Neither
+
+
+__ANSWER: A) __
+
+Explanation:
+This is a combination problem where order does not matter. 
+
+### MCQ Question 11 {-}
+
+What rule would you use to calculate  how many ways can you arrange the letters in the word "BALLOON"
+
+
+A) Combination
+
+B) Permutation
+
+C) Neither
+
+
+__ANSWER: C) __
+
+Explanation:
+As there are two L's and O's you have to take that into account
+
+
+### Question 12 {-}
+
+Write your own question or multiple choice question with solution on counting.
+

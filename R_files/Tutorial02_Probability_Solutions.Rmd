@@ -1,0 +1,429 @@
+---
+output:
+  pdf_document: default
+---
+
+
+```{r include=FALSE,echo=FALSE}
+# automatically create a bib database for R packages
+library(knitr)
+library(tidyverse)
+library(dplyr)
+library(reshape2)
+library(kableExtra)
+library(rstatix)
+
+```
+
+```{r , include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning = FALSE, fig.align = "center", fig.pos = "H",dpi = 300,fig.path="figures/")
+
+```
+
+
+# Tutorial 2 - Solutions {-}
+
+## Mathematical Probability {-}
+
+### Question 1 {-}
+
+The events A and B are defined on a sample space. The following probabilities are known: Pr(A)= 2/3; Pr(B)= 1/6 and $Pr(A \cap B)$= 1/6
+
+a. Are A and B mutually exclusive and independent?
+
+b. Find the following additional probabilities:
+
+
+  i. Pr(notA)
+  
+  ii. $Pr(A \cup B)$
+  
+  iii. $Pr(A|B)$
+
+__SOLUTION:__
+
+```{r P1bQ1i}
+P1bQ1i<-1-1/3
+```
+
+i. $$Pr(notA)=1-Pr(A)=`r P1bQ1i`$$
+
+
+```{r P1bQ1ii}
+P1bQii<-2/3+1/6-1/6
+```
+
+ii. $$Pr(A \cup B)=Pr(A)+Pr(B)-(Pr(A\cap B))=`r P1bQii` $$
+
+
+```{r P1bQ1iii}
+P1bQ1iii<-(1/6)/(1/6)
+```
+
+iii. $$Pr(A | B)=\frac{Pr(A \cap B)}{Pr(B)}=`r P1bQ1iii`$$
+
+
+
+### Question 2 {-}
+
+2. The events A and B are defined on a sample space. The following probabilities are known: Pr(A)= 1/2 ; $Pr(B)= \frac{1}{2}$ and $Pr(A \cup B)= \frac{5}{6}$.
+Find the following additional probabilities:
+
+i.  Pr(A)= Pr(notA)
+
+ii. $Pr(A\cap B)$
+
+iii. Pr(A|B)
+
+__SOLUTION:__
+```{r P1bQ2i}
+P1bQ2i<-1-1/2
+```
+
+
+i. $$Pr(notA)=1-Pr(A)=`r P1bQ2i`$$
+
+
+
+```{r P1bQ2ii}
+P1bQ2ii<-1/2+1/2-5/6
+```
+
+ii. $$Pr(A \cap B)=Pr(A)+Pr(B)-(Pr(A\cup B))=`r P1bQ2ii` $$
+
+```{r P1bQ2iii}
+P1bQ2iii<-(1/6)/(1/2)
+```
+
+iii. $$Pr(A | B)=\frac{Pr(A \cap B)}{Pr(B)}=`r P1bQ2iii`$$
+
+
+
+
+### Question 3 {-}
+3. The events A and B are defined on a sample space. For each of the following conditions write down the defining probability statement in terms of A and B.
+
+i.  The probability of all events except A
+
+ii. A and B are mutually exclusive
+
+iii. A and B are mutually exclusive and exhaustive
+
+iv. The probability of A and/or B
+
+v. The probability of A given B
+
+__SOLUTION:__
+
+
+i.  The probability of all events except A
+
+$$P(\bar{A})=1-Pr(A)$$
+
+ii. A and B are mutually exclusive
+
+$$Pr(A \cap B)=0$$
+
+iii. A and B are mutually exclusive and exhaustive
+
+$$Pr(A \cap B)=0$$
+$$Pr(A \cup B)=1$$
+
+iv. The probability of A and/or B
+
+$$Pr(A \cup B)=Pr(A)+Pr(B)-(Pr(A\cap B))$$
+
+v. The probability of A given B
+
+$$Pr(A | B)=\frac{Pr(A \cap B)}{Pr(B)}$$
+
+
+### Question 4  {-}
+
+A standard green and a standard red die are thrown at the same time.
+
+i.  Define the sample space for all the events.
+
+ii. What is probability that the sum of the scores on the two dice is greater than 6.
+
+iii. What is the probability that the green die is less than 5.
+
+iv. That is the probability that the sum of the two die is greater than six given that the green die is less than 5.
+
+__SOLUTION:__
+
+
+i. Define the sample space for all the events.
+
+
+
+```{r P1bQ4i,echo=FALSE}
+
+Table<-matrix(c("1,1","2,1","3,1","4,1","5,1","6,1","1,2","2,2","3,2","4,2","5,2","6,2","1,3","2,3","3,3","4,3","5,3","6,3","1,4","2,4","3,4","4,4","5,4","6,4","1,5","2,5","3,5","4,5","5,5","6,5","1,6","2,6","3,6","4,6","5,6","6,6"),ncol =6,byrow=TRUE)
+Table
+```
+
+ii. What is probability that the sum of the scores on the two dice is greater than 6.
+
+__SOLUTIONS:__
+$$Pr(Sum >6)=\frac{21}{36}$$
+
+iii. What is the probability that the green die is less than 5.
+
+__SOLUTIONS:__
+
+$$ Pr(Green<5)=\frac{24}{36}$$
+
+iv. What is the probability that the sum of the two die is greater than six given that the green die is less than 5.
+
+__SOLUTIONS:__
+
+$$Pr(Green<5 \cap Sum >6)=\frac{10}{36}$$
+$$Pr(Sum >6 | Green <5)=\frac{\frac{10}{36}}{\frac{24}{36}}=\frac{10}{24}$$
+
+
+## Conditional Probability {-}
+### Question 5 {-}
+
+
+50% of the population owns a smart-phone and a tablet, and 60% of the population own a smart-phone. What is the probability that a someone owns a tablet given that they own a smart-phone?
+
+__SOLUTION:__
+```{r P1bQ5}
+P1bQ5<-(.5)/(.6)
+```
+
+ $$Pr(Tablet | Smart-Phone)=\frac{Pr(Smart-Phone \cap Tablet)}{Pr(Smart-Phone)}=\frac{0.5}{0.6}=`r P1bQ5`$$
+
+
+
+6. The probability that it is Friday and that a student is absent is 0.03. Since there are 5 school days in a week, the probability that it is Friday is 0.2. What is the probability that a student is absent given that today is Friday?
+
+__SOLUTION:__
+
+```{r P1bQ6}
+P1bQ6<-(.03)/(.2)
+```
+
+ $$Pr(Absent | Friday)=\frac{Pr(Absent \cap Friday)}{Pr(Friday)}=\frac{0.03}{0.2}=`r P1bQ6`$$
+
+
+
+## Bayes Probability {-}
+### Question 7 {-}
+
+7. In 2024, of the 200 million people registered to vote in America 4% say they would have voted for Robert F. Kennedy Jr. Of these voters 75% believe the Earth is flat, while only 6% of the other voters believe the Earth is flat.
+
+
+i. Find the probability that a voter selected believes the Earth is flat.
+
+__SOLUTION:__
+
+```{r P1bQ7a}
+P1bQ7a<-.04*0.75+0.96*0.06
+```
+$$Pr(RFK)=0.04$$
+$$Pr(Flat |RFK)=0.75$$
+$$Pr(RFK\cap Flat)=Pr(Flat |RFK )Pr(RFK)=0.75*0.04=`r 0.75*0.04`$$
+
+$$Pr(Flat |\bar{RFK} )=0.06$$
+
+$$Pr(\bar{RFK})=0.96$$
+$$Pr(\bar{RFK}\cap Flat)=Pr(Flat |\bar{RFK} )Pr(\bar{RFK})=0.06*0.96=`r 0.06*0.96`$$
+
+
+ $$Pr(Flat)=$$
+ $$Pr(Flat | RFK)Pr(RFK)+Pr(Flat | \bar{RFK})Pr(\bar{RFK})=`r P1bQ7a`$$
+
+
+
+ii. If a voter is selected and they believe the Earth is flat, determine the probability that they would have voted for Robert F. Kennedy
+
+__SOLUTION:__
+```{r P1bQ7b}
+P1bQ7b<-.04*0.75/(P1bQ7a)
+```
+
+ $$Pr(RFK|Flat)=$$
+ $$\frac{Pr(Flat | RFK)Pr(RFK)}{Pr(Flat \cap RFK)Pr(RFK)+Pr(Flat | \bar{RFK})Pr(\bar{RFK})}=$$
+ $$`r P1bQ7b`$$
+ 
+ $$\frac{Pr(Flat \cap RFK)}{Pr(Flat \cap RFK)+Pr(Flat \cap \bar{RFK})}=$$
+ $$`r P1bQ7b`$$
+
+
+### Question 8 {-}
+
+ In 2024, of the 200 million people registered to vote in America 38% say they will vote for Donald Trump. Of these voters 20% are birthers (people who questioned that President Obama was born in the US), while only 1% of the other voters are birthers.
+
+i. Find the probability that a voter selected is a birther.
+
+__SOLUTION:__
+
+
+```{r P1bQ8a}
+P1bQ8a<-0.38*0.2+0.62*0.01
+```
+
+ $$Pr(birther)=$$
+ $$Pr(birther |Trump)Pr(Trump)+Pr(birther | Not Trump)Pr(Not Trump)=$$
+ $$`r P1bQ8a`$$
+
+
+
+
+ii. If a voter is selected and they are a birther, determine the probability that they will vote for Trump.
+
+__SOLUTION:__
+
+```{r P1bQ8b}
+P1bQ8b<-(0.38*0.2)/(0.38*0.2+0.62*0.01)
+```
+
+ $$Pr(Trump | birther)=$$ 
+ $$ \frac{Pr(birther | Trump)Pr(Trump)}{Pr(birther | Trump)Pr(Trump)+Pr(birther | Not Trump)Pr(Not Trump)}=$$
+ $$`r P1bQ8b`$$
+
+
+### Question 9 {-}
+
+ In a school 30% of the students are male. Of these males 20% have long hair, while 90% of the female students have long hair. 
+
+i. Find the probability that a student selected has long hair.
+
+__SOLUTION:__
+```{r P1bQ9i}
+P1bQ9i<-.3*.2+.7*.9
+```
+  $$Pr(Long-Hair)=$$
+  $$Pr(Long-Hair | Male)Pr(Male)+Pr(Long-Hair | Female)Pr(Female)=$$
+  $$`r P1bQ9i`$$
+
+
+
+ii. If a student is selected and they have long hair, determine the probability that the student is male.
+
+__SOLUTION:__
+```{r P1bQ9ii}
+P1bQ9ii<-(.3*.2)/(.3*.2+.7*.9)
+```
+
+  $$Pr(Male|Long-Hair)=$$
+  $$\frac{Pr(Long-Hair | Male)Pr(Male)}{Pr(Long-Hair | Male)Pr(Male)+Pr(Long-Hair | Female)Pr(Female)}=$$
+  $$`r P1bQ9ii` $$
+
+
+## Multiple-Choice Questions {-}
+
+
+### MCQ Question 10 {-}
+
+A fair six-sided die is rolled. What is the probability of rolling a number greater than 4?
+
+A) $\frac{1}{2}$
+ 
+B) $\frac{1}{3}$
+
+ 
+C) $\frac{1}{6}$
+
+ 
+D) $\frac{1}{4}$
+
+ 
+__SOLUTION:__
+
+Correct Answer: B) 
+
+
+Explanation:
+The numbers greater than 4 are 5 and 6, so there are 2 favorable outcomes out of 6 possible outcomes.
+
+### MCQ Question 11 {-}
+
+If the probability that a student passes Mathematics is 0.7 and the probability that the same student passes Science is 0.6, and the probability that the student passes both subjects is 0.5, what is the probability that the student passes at least one subject?
+
+A) 0.8
+
+B) 0.7
+
+C) 1.0
+
+D) 0.9
+
+__SOLUTION:__
+
+Correct Answer: A) 0.8
+
+Explanation:
+The probability of passing at least one subject is given by 
+$P(Math\cup Science)=P(Math)+P(Science)-P(Math\cap Science)=0.7+0.6-0.5=0.8.$
+
+### MCQ Question 11 {-}
+
+A company has two machines producing light bulbs. Machine 1 produces $70%$ of the light bulbs and Machine 2 produces $30%$. Machine 1 has a $2%$ defect rate, and Machine 2 has a $4%$ defect rate. If a randomly selected bulb is defective, what is the probability it was produced by Machine 2?
+
+A) 0.012
+
+B) 0.026
+
+C) 0.223
+
+D) 0.462
+
+E) 0.014
+
+__SOLUTION:__
+
+D)
+
+$$Pr(M2|Def)=
+\frac{Pr( Def |M2)Pr(M2)}{(Pr( Def|M2)Pr(M2)+Pr( Def|M1)Pr(M1) )}=0.462 $$
+
+
+
+### MCQ Question 13 {-}
+ If events A and B are mutually exclusive, which of the following is true?
+
+A) \( P(A \cap B) = 0 \)  
+
+B) \( P(A \cup B) = P(A) \cdot P(B) \)  
+
+C) \( P(A | B) = P(A) \)  
+
+D) \( P(A \cap B) = P(A) + P(B) \)  
+
+__SOLUTION:__ **A**
+
+
+### MCQ Question 14 {-}
+If \( P(A \cap B) = 0.2 \) and \( P(B) = 0.5 \), what is \( P(A | B) \)?
+
+A) 0.1  
+
+B) 0.2  
+
+C) 0.4  
+
+D) 0.5  
+
+__SOLUTION:__ **C**
+
+
+### MCQ Question 15 {-}
+Bayes’ theorem is used to:
+
+A) Calculate the probability of mutually exclusive events
+
+B) Determine the probability of independent events
+
+C) Update probabilities based on new information
+
+D) Find the mean of a distribution
+
+__SOLUTION:__ C. Update probabilities based on new information
+
+
+###  Question 16 {-}
+
+Write your own Conditional or Bayes probability question. 
