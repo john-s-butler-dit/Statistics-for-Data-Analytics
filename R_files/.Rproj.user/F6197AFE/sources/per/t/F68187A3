@@ -1,6 +1,6 @@
 {
     "id": "F68187A3",
-    "path": "~/Dropbox/MY_DOCUMENTS/MY Teaching/TUDublin/1007 Statistics for Analytics/R_files/MyFirst.Rmd",
+    "path": "~/Dropbox/MY_DOCUMENTS/MY Teaching/TUDublin/1007 Statistics for Analytics/TempWebsite/Statistics-for-Data-Analytics/R_files/MyFirst.Rmd",
     "project_path": "MyFirst.Rmd",
     "type": "r_markdown",
     "hash": "4041062516",
@@ -15,7 +15,7 @@
         "Source": "Source",
         "cursorPosition": "20,1",
         "scrollLine": "14",
-        "last_setup_crc32": "13c12d4ebb338d19"
+        "last_setup_crc32": ""
     },
     "folds": "",
     "lastKnownWriteTime": 1759326259,
