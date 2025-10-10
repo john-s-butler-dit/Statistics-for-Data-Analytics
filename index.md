@@ -37,6 +37,14 @@ title: Statistics for Data Analytics
 ### [Binomial Distributions](Lectures/1007_Lecture06-Binomial.pdf)
 ### [Poisson Distributions](Lectures/1007_Lecture07-Poisson.pdf)
 
+## Week 5 Lectures
+
+### [Continuous Distributions](Lectures/1007_Lecture08-ContinuousProbabilityDistributions.pptx)
+
+## Week 6 Lectures
+
+### [Central Limit Theorem](Lectures/1007_Lecture09-Statistical_Inference.pptx)
+
 
 ## Tutorial Sheets
 ### [OneNote](https://tudublin-my.sharepoint.com/personal/john_s_butler_tudublin_ie/Documents/Class%20Notebooks/1007%20Statistics%20for%20Data%20Analytics%202025-2026)
@@ -48,6 +56,8 @@ title: Statistics for Data Analytics
 ### Week 3 Solutions [Discrete Distributions](Tutorials/Tutorial03_DiscreteDist_Solutions.pdf) [RMD](R_files/Tutorial03_DiscreteDist_Solutions.Rmd)
 ### Week 4 [Named Discrete Distributions](Tutorials/Tutorial04_NamedDiscrete.pdf)
 ### Week 4 Solutions [Named Discrete Distributions](Tutorials/Tutorial04_NamedDiscrete_Solutions.pdf) [RMD](R_files/Tutorial04_NamedDiscrete_Solutions.Rmd)
+### Week 5 [Continuous Distribution](Tutorials/Tutorial05_CI.pdf)
+
 
 
 
